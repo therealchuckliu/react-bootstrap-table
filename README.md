@@ -1,8 +1,5 @@
 # react-bootstrap-table
 
-### react-bootstrap-table will stop develop new feature and move to [react-bootstrap-table2](https://github.com/react-bootstrap-table/react-bootstrap-table2), but keep to fix critical bugs.
-### Feel free to let me know your idea on [here](https://github.com/react-bootstrap-table/react-bootstrap-table2/issues)
-
 [![Join the chat at https://gitter.im/AllenFang/react-bootstrap-table](https://badges.gitter.im/AllenFang/react-bootstrap-table.svg)](https://gitter.im/AllenFang/react-bootstrap-table?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [![NPM version][npm-badge]][npm] [![Build Status][travis-ci-image]][travis-ci-url]
@@ -12,34 +9,39 @@
 [![peerDependency Status][peer-deps-badge]][peer-deps]   
 It's a [react.js](http://facebook.github.io/react/) table for bootstrap, named react-bootstrap-table. It's a configurable, functional table component and make you build a Bootstrap Table more efficiency and easy in your React application, However ```react-bootstrap-table``` support these features:
 
-- Striped, borderless, condensed table
-- Column align, hidden, width, sort, title, styling, customization
-- Table scrolling
+- Striped, Borderless, Condensed table
+- Column align, hidden, width, sort, title, styling
+- Scrolling table
 - Cell format
 - Pagination
 - Row selection
-- Table Search, Column filter
-- Cell editor
+- Column filter with multi type
+- Cell edit with multi type editor
 - Insert & delete Row
+- Table, row and column styling
+- Search
 - Export to CSV
 - Rich function hooks
-- Header column span
+- Header colum span
 - Remote mode
-- Row expand
-- Key board navigation
+- Expandable row
+- Key board Navigation
+- Customization
 
 ![Example](http://i.imgur.com/Ov1wMse.png)
-See more about [react-bootstrap-table](http://allenfang.github.io/react-bootstrap-table/index.html) and explore more examples on [examples](https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js) folder</br>
+Explore more example on [examples](https://github.com/AllenFang/react-bootstrap-table/tree/master/examples/js) folder</br>
+See more about [react-bootstrap-table](http://allenfang.github.io/react-bootstrap-table/index.html).</br>
+Check [this](http://allenfang.github.io/react-bootstrap-table/advance.html) for more advance usage for ```react-bootstrap-table```. Feel free to ask more examples.</br>
 Check the <a href='https://github.com/AllenFang/react-bootstrap-table/blob/master/CHANGELOG.md'>CHANGELOG</a> for more detail release notes.
 
 ## Notes
+***`v4.0.0-beta.1` published, this release is for replacing `react-toastr` with `react-s-alert`, check [PR#1216](https://github.com/AllenFang/react-bootstrap-table/pull/1216) and after `v4.0.0`, `react-bootstrap-table` will use `react-s-alert` for notification***
 
-
-***`v4.0.0` released, this release mainly replace `react-toastr` with `react-s-alert`***
-1. Replace `react-toastr` by `react-s-alert`
-2. Use `prop-types`
-3. Support `bootstrap@4` and `bootstrap@3` both. If you use 4, please add `version='4'` on `<BootstrapTable>`
-4. No important features were implemented, most of bug fixes and improvement
+***```v3.0.0``` released, check [examples](https://github.com/AllenFang/react-bootstrap-table/tree/v3.0.0-dev/examples/js/custom) to learn how to customize the component. following
+is the major things we completed in this release***
+- Remove the `bootstrap.js` and `jQuery` dependencies
+- More easy and have ability to customize the components(search, pagination, insert modal etc.)
+- Key board Navigation
 
 ***After ```v2.4.4```, we move the css files to ```dist``` folder for allowing this repo can be hosted on [cdnjs](https://github.com/cdnjs/cdnjs)<br/>***
 
@@ -100,9 +102,11 @@ The UMD build is also available on [npmcdn](https://npmcdn.com):
 ```
 
 ### c.Import CSS
-Finally, you need to import the css file to your app:
+Finally, you need to import the css file to your app, there are two css file you can choose.</br>
+```react-bootstrap-table-all.min.css``` include toastr.</br>```react-bootstrap-table.min.css``` doesn't include toastr.</br>
+**Notes: react-bootstrap-table use toastr to alarm some message to user.**
 ```html
-<link rel="stylesheet" href="./dist/react-bootstrap-table.min.css">
+<link rel="stylesheet" href="./dist/react-bootstrap-table-all.min.css">
 ```
 The CSS files you can find in the css folder.
 
@@ -133,7 +137,7 @@ React.render(
 );
 ```
 ### More react-bootstrap-table examples
-The example source codes are in the [examples folder](https://github.com/AllenFang/react-bootstrap-table/tree/master/examples) folder. Run  the following commands for a live demo.</br>
+The example source codes is in the [examples](https://github.com/AllenFang/react-bootstrap-table/tree/master/examples) folder. Run  the following commands for a live demo.</br>
 ```bash
 $ git clone https://github.com/AllenFang/react-bootstrap-table.git
 $ cd react-bootstrap-table
@@ -148,8 +152,6 @@ $ npm start # after start, open browser and go to http://localhost:3004
 Help this project to integrate a better examples demo, add travis & badge, code formatting, give a lot of suggestions and bugs report.   
 **[Whien](https://github.com/madeinfree)**  
 Implement a lots of awesome new feature and also fix some bugs and enhancements.   
-**[Parth Prajapati](https://github.com/prajapati-parth)**  
-Help to check issues and give great and useful instructions.   
 **[khinlatt](https://github.com/khinlatt)**  
 Contribute export csv, multi-search and bug fixing.  
 **[dana](https://github.com/dana2208)**  

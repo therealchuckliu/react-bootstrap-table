@@ -25,7 +25,6 @@ import Expand from './expandRow/demo';
 import Custom from './custom/demo';
 import Span from './column-header-span/demo';
 import KeyBoardNav from './keyboard-nav/demo';
-import FooterTable from './footer/demo';
 
 const renderApp = () => {
   ReactDOM.render(
@@ -53,7 +52,6 @@ const renderApp = () => {
             <Route path='custom' component={ Custom } />
             <Route path='expandRow' component={ Expand } />
             <Route path='keyboard-nav' component={ KeyBoardNav } />
-            <Route path='footer' component={ FooterTable } />
           </Route>
           <Route path='*' component={ PageNotFound }/>
         </Route>

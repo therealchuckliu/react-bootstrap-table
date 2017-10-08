@@ -1,7 +1,6 @@
-import Utils from './util';
 import React from 'react';
 
-const editor = function(editable, attr, format, editorClass, defaultValue, ignoreEditable, row) {
+const editor = function(editable, attr, format, editorClass, defaultValue, ignoreEditable) {
   if (editable === true ||
     (editable === false && ignoreEditable) ||
     typeof editable === 'string') { // simple declare
@@ -36,11 +35,7 @@ const editor = function(editable, attr, format, editorClass, defaultValue, ignor
 
     if (editable.type === 'select') {// process select input
       let options = [];
-      let { values } = editable.options;
-      const { textKey, valueKey } = editable.options;
-      if (Utils.isFunction(values)) {
-        values = values(row);
-      }
+      const { values, textKey, valueKey } = editable.options;
       if (Array.isArray(values)) {// only can use arrray data for options
         let text;
         let value;
@@ -55,8 +50,7 @@ const editor = function(editable, attr, format, editorClass, defaultValue, ignor
           return (
             <option key={ 'option' + i } value={ value }>{ text }</option>
           );
-        }
-        );
+        });
       }
       return (
         <select { ...attr } defaultValue={ defaultValue }>

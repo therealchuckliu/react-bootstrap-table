@@ -18,7 +18,7 @@ function getProducts() {
   return products;
 }
 
-export default class RemoteStoreAll extends React.Component {
+export default class RemoteStoreSorting extends React.Component {
   constructor(props) {
     super(props);
     this.products = getProducts();

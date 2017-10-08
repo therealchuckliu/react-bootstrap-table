@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, PropTypes } from 'react';
 import classSet from 'classnames';
 import PageButton from './PageButton.js';
 import SizePerPageDropDown from './SizePerPageDropDown';
@@ -65,7 +64,6 @@ class PaginationList extends Component {
         this.props.onSizePerPageList(selectSize);
       }
     }
-
     this.setState(() => { return { open: false }; });
   }
 
@@ -98,7 +96,7 @@ class PaginationList extends Component {
     start = dataSize === 0 ? 0 : start + 1;
     let to = Math.min((sizePerPage * (currPage + offset) - 1), dataSize);
     if (to >= dataSize) to--;
-    let total = paginationShowsTotal ? <span>
+    let total = paginationShowsTotal ? <span style={ { float: 'right' } }>
       Showing rows { start } to&nbsp;{ to + 1 } of&nbsp;{ dataSize }
     </span> : null;
 
@@ -111,7 +109,6 @@ class PaginationList extends Component {
       sizePerPage,
       sizePerPageList,
       pageStartIndex,
-      totalPages: this.totalPages,
       changePage: this.changePage,
       toggleDropDown: this.toggleDropDown,
       changeSizePerPage: this.changeSizePerPage,
@@ -127,16 +124,16 @@ class PaginationList extends Component {
       <div className='row' style={ { marginTop: 15 } }>
         {
           content ||
-            [ (
-              <div key='paging-left' className='col-md-6 col-xs-6 col-sm-6 col-lg-6'>
-                { total }{ sizePerPageList.length > 1 ? dropdown : null }
-              </div>
-              ), (
-              <div key='paging-right' style={ { display: hidePageList } }
-                className='col-md-6 col-xs-6 col-sm-6 col-lg-6'>
-                { pageBtns }
-              </div>
-            ) ]
+          <div>
+            <div className='col-md-4 col-xs-12 col-sm-12 col-lg-4 sizePerPageList'>
+              { sizePerPageList.length > 1 ? dropdown : null }
+            </div>
+            <div style={ { display: hidePageList } }
+              className='col-md-8 col-xs-12 col-sm-12 col-lg-8 pageButtons'>
+              { pageBtns }
+              { total }
+            </div>
+          </div>
         }
       </div>
     );
@@ -174,7 +171,7 @@ class PaginationList extends Component {
         const pageNum = _sizePerPage.value || _sizePerPage;
         if (sizePerPage === pageNum) sizePerPageText = pageText;
         return (
-          <li key={ pageText } role='presentation' className='dropdown-item'>
+          <li key={ pageText } role='presentation'>
             <a role='menuitem'
               tabIndex='-1' href='#'
               data-page={ pageNum }

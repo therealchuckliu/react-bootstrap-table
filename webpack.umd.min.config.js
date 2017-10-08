@@ -2,9 +2,6 @@
 var webpack = require('webpack');
 var umdConfig = require('./webpack.umd.config');
 
-// setting environment
-process.env.NODE_ENV = 'production';
-
 umdConfig.output.filename = '[name].min.js';
 umdConfig.devtool = null;
 umdConfig.plugins = [

@@ -1,23 +1,23 @@
 /* eslint no-nested-ternary: 0 */
 import classSet from 'classnames';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import Utils from './util';
+import React, { Component, PropTypes } from 'react';
 
 class TableRow extends Component {
 
   constructor(props) {
     super(props);
     this.clickNum = 0;
+    this.state = {
+      customStyle: {}
+    };
   }
 
   rowClick = e => {
     const rowIndex = this.props.index + 1;
     const cellIndex = e.target.cellIndex;
     if (this.props.onRowClick) this.props.onRowClick(rowIndex, cellIndex);
-    const {
-      selectRow, unselectableRow, isSelected, onSelectRow, onExpandRow, dbClickToEdit
-    } = this.props;
+    const { selectRow, unselectableRow, isSelected, onSelectRow, onExpandRow } = this.props;
     if (selectRow) {
       if (selectRow.clickToSelect && !unselectableRow) {
         onSelectRow(rowIndex, !isSelected, e);
@@ -35,9 +35,7 @@ class TableRow extends Component {
           this.clickNum = 0;
         }, 200);
       } else {
-        if (dbClickToEdit) {
-          this.expandRow(rowIndex, cellIndex);
-        }
+        this.expandRow(rowIndex, cellIndex);
       }
     }
   }
@@ -78,8 +76,7 @@ class TableRow extends Component {
 
   render() {
     this.clickNum = 0;
-    const { selectRow, row, isSelected, className, index } = this.props;
-    let { style } = this.props;
+    const { selectRow, row, isSelected, className } = this.props;
     let backgroundColor = null;
     let selectRowClass = null;
 
@@ -91,33 +88,36 @@ class TableRow extends Component {
         selectRow.className(row, isSelected) : ( isSelected ? selectRow.className : null);
     }
 
-    if (Utils.isFunction(style)) {
-      style = style(row, index);
-    } else {
-      style = { ...style } || {};
-    }
-    // the bgcolor of row selection always overwrite the bgcolor defined by global.
-    if (style && backgroundColor && isSelected) {
-      style.backgroundColor = backgroundColor;
-    }
     const trCss = {
-      style: { ...style },
+      style: { backgroundColor },
       className: classSet(selectRowClass, className)
     };
 
     return (
-      <tr { ...trCss }
+      <tr ref='tableRowNative' { ...trCss }
+          style={ { ...this.props.style, ...this.state.customStyle } }
           onMouseOver={ this.rowMouseOver }
           onMouseOut={ this.rowMouseOut }
           onClick={ this.rowClick }
           onDoubleClick={ this.rowDoubleClick }>{ this.props.children }</tr>
     );
   }
+
+  getTableRowHeight() {
+    return this.refs.tableRowNative.clientHeight;
+  }
+
+  setTableRowHeight(height) {
+    this.setState({
+      customStyle: {
+        height
+      }
+    });
+  }
 }
 TableRow.propTypes = {
   index: PropTypes.number,
   row: PropTypes.any,
-  style: PropTypes.any,
   isSelected: PropTypes.bool,
   enableCellEdit: PropTypes.bool,
   onRowClick: PropTypes.func,

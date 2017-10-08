@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Const from './Const';
 import Util from './util';
@@ -109,7 +108,6 @@ class TableColumn extends Component {
       keyBoardNav,
       tabIndex,
       customNavStyle,
-      withoutTabIndex,
       row
     } = this.props;
 
@@ -149,11 +147,8 @@ class TableColumn extends Component {
         className = `${className} default-focus-cell`;
       }
     }
-
-    const attr = {};
-    if (!withoutTabIndex) attr.tabIndex = tabIndex;
     return (
-      <td { ...attr } style={ tdStyle }
+      <td tabIndex={ tabIndex } style={ tdStyle }
           title={ columnTitle }
           className={ className }
           { ...opts } { ...attrs }>
@@ -175,7 +170,6 @@ TableColumn.propTypes = {
   isFocus: PropTypes.bool,
   onKeyDown: PropTypes.func,
   tabIndex: PropTypes.string,
-  withoutTabIndex: PropTypes.bool,
   keyBoardNav: PropTypes.oneOfType([ PropTypes.bool, PropTypes.object ]),
   customNavStyle: PropTypes.oneOfType([ PropTypes.func, PropTypes.object ]),
   row: PropTypes.any  /* only used on custom styling for navigation */
@@ -183,7 +177,6 @@ TableColumn.propTypes = {
 
 TableColumn.defaultProps = {
   dataAlign: 'left',
-  withoutTabIndex: false,
   hidden: false,
   className: '',
   isFocus: false,

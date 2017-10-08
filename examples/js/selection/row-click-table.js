@@ -18,11 +18,11 @@ function addProducts(quantity) {
   }
 }
 
-addProducts(50);
+addProducts(5);
 
 const options = {
-  onRowClick: function(row, columnIndex, rowIndex) {
-    alert(`You click row id: ${row.id}, column index: ${columnIndex}, row index: ${rowIndex}`);
+  onRowClick: function(row, columnIndex) {
+    alert(`You click row id: ${row.id}, column index: ${columnIndex}`);
   },
   onRowDoubleClick: function(row) {
     alert(`You double click row id: ${row.id}`);
@@ -32,7 +32,7 @@ const options = {
 export default class SingleSelectTable extends React.Component {
   render() {
     return (
-      <BootstrapTable data={ products } options={ options } pagination>
+      <BootstrapTable data={ products } options={ options }>
           <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
           <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>

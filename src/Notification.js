@@ -1,22 +1,31 @@
-import Alert from 'react-s-alert';
+import React, { Component } from 'react';
 
-const notice = (type, msg, title) => {
-  const titleHTML = title ? `<h4><strong>${ title }</strong></h4>` : '';
+import { ToastContainer, ToastMessage } from '@allenfang/react-toastr';
 
-  const bodyHTML = `
-    ${ titleHTML }
-    <div>
-      <span class='fa fa-exclamation-triangle glyphicon glyphicon-alert'></span>&nbsp;
-      <span>${ msg }</span>
-    </div>
-  `;
 
-  Alert.error(bodyHTML, {
-    position: 'top-right',
-    timeout: 3000,
-    html: true,
-    effect: 'scale'
-  });
-};
+const ToastrMessageFactory = React.createFactory(ToastMessage.animation);
 
-export { notice };
+class Notification extends Component {
+  // allow type is success,info,warning,error
+  notice(type, msg, title) {
+    this.refs.toastr[type](
+      msg, title, {
+        mode: 'single',
+        timeOut: 5000,
+        extendedTimeOut: 1000,
+        showAnimation: 'animated  bounceIn',
+        hideAnimation: 'animated bounceOut'
+      });
+  }
+
+  render() {
+    return (
+      <ToastContainer ref='toastr'
+        toastMessageFactory={ ToastrMessageFactory }
+        id='toast-container'
+        className='toast-top-right'/>
+    );
+  }
+}
+
+export default Notification;

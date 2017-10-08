@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Const from './Const';
 import classSet from 'classnames';
@@ -51,6 +50,7 @@ class TableHeader extends Component {
     ));
 
     const rows = [];
+    const stickyRows = [];
     let rowKey = 0;
 
     rows[0] = [];
@@ -65,7 +65,7 @@ class TableHeader extends Component {
         !this.props.expandColumnBeforeSelectColumn &&
           <ExpandRowHeaderColumn rowCount={ rowCount + 1 }/>
     ]);
-    const { sortIndicator, sortList, onSort, reset, version } = this.props;
+    const { sortIndicator, sortList, onSort, reset } = this.props;
 
     React.Children.forEach(this.props.children, (elm) => {
       if (elm === null || elm === undefined) {
@@ -81,11 +81,17 @@ class TableHeader extends Component {
       }
       if ((rowSpan + rowIndex) === (rowCount + 1)) {
         rows[rowIndex].push(React.cloneElement(
-          elm, { reset, key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false, version }
+          elm, { reset, key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false }
           ));
       } else {
         rows[rowIndex].push(React.cloneElement(
-          elm, { key: rowKey++, isOnlyHead: true, version }
+          elm, { key: rowKey++, isOnlyHead: true }
+          ));
+      }
+
+      if ((rowSpan + rowIndex) === 1) {
+        stickyRows.push(React.cloneElement(
+          elm, { reset, key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false }
           ));
       }
     });
@@ -98,8 +104,20 @@ class TableHeader extends Component {
       );
     });
 
+    const stickytrs = (
+      <tr key={ 0 }>
+        { stickyRows[0] }
+      </tr>
+    );
+
     return (
       <div ref='container' className={ containerClasses } style={ this.props.style }>
+        <table className={ tableClasses } style={ { position: 'absolute', display: this.props.showStickyColumn ? 'block' : 'none', width: 'initial', backgroundColor: '#FFFFFF' } }>
+          { React.cloneElement(this.props.colGroups) }
+          <thead ref='header'>
+            { stickytrs }
+          </thead>
+        </table>
         <table className={ tableClasses }>
           { React.cloneElement(this.props.colGroups, { ref: 'headerGrp' }) }
           <thead ref='header'>
@@ -160,8 +178,7 @@ TableHeader.propTypes = {
   reset: PropTypes.bool,
   expandColumnVisible: PropTypes.bool,
   expandColumnComponent: PropTypes.func,
-  expandColumnBeforeSelectColumn: PropTypes.bool,
-  version: PropTypes.string
+  expandColumnBeforeSelectColumn: PropTypes.bool
 };
 
 export default TableHeader;

@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, PropTypes } from 'react';
 import Const from '../Const';
 
 class InsertModalFooter extends Component {
@@ -28,18 +27,18 @@ class InsertModalFooter extends Component {
       children
     } = this.props;
 
-    const content = children || [
-          (<button
-            key='closeBtn'
+    const content = children || (
+        <span>
+          <button
             type='button'
             className={ `btn ${closeBtnContextual} ${closeBtnClass}` }
-            onClick={ this.handleCloseBtnClick }>{ closeBtnText }</button>),
-          (<button
-            key='saveBtn'
+            onClick={ this.handleCloseBtnClick }>{ closeBtnText }</button>
+          <button
             type='button'
             className={ `btn ${saveBtnContextual} ${saveBtnClass}` }
-            onClick={ this.handleSaveBtnClick }>{ saveBtnText }</button>)
-    ];
+            onClick={ this.handleSaveBtnClick }>{ saveBtnText }</button>
+        </span>
+      );
 
     return (
       <div className={ `modal-footer ${className}` }>
@@ -65,7 +64,7 @@ InsertModalFooter.defaultProps = {
   className: '',
   saveBtnText: Const.SAVE_BTN_TEXT,
   closeBtnText: Const.CLOSE_BTN_TEXT,
-  closeBtnContextual: 'btn-default btn-secondary',
+  closeBtnContextual: 'btn-default',
   saveBtnContextual: 'btn-primary',
   closeBtnClass: '',
   saveBtnClass: '',

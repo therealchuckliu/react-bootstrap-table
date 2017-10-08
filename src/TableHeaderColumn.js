@@ -1,7 +1,6 @@
 /* eslint default-case: 0 */
 /* eslint guard-for-in: 0 */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, PropTypes } from 'react';
 import classSet from 'classnames';
 import Const from './Const';
 import Util from './util';
@@ -21,19 +20,6 @@ class TableHeaderColumn extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.reset) {
       this.cleanFiltered();
-    }
-
-    // If column not displaying the same dataField, reset the filter accordingly
-    if (nextProps.filter && nextProps.dataField !== this.props.dataField) {
-      const emitter = nextProps.filter.emitter || {};
-      const currentFilter = emitter.currentFilter || {};
-      const filter = currentFilter[nextProps.dataField];
-      const value = filter ? filter.value : '';
-
-      const { ref } = this.getFilters() || {};
-      if (this.refs[ref]) {
-        this.refs[ref].setState({ value });
-      }
     }
   }
 
@@ -96,31 +82,9 @@ class TableHeaderColumn extends Component {
     this.refs['header-col'].setAttribute('data-field', this.props.dataField);
   }
 
-  renderDefaultCaret(dataSort, isBootstrap4) {
-    if (!dataSort) return null;
-    if (isBootstrap4) {
-      return (
-        <span className='order fa fa-sort'
-          style={ { margin: '10px 0 10px 5px', color: '#ccc' } }></span>
-      );
-    } else {
-      return (
-        <span className='order'>
-          <span className='dropdown'>
-            <span className='caret' style={ { margin: '10px 0 10px 5px', color: '#ccc' } }></span>
-          </span>
-          <span className='dropup'>
-            <span className='caret' style={ { margin: '10px 0', color: '#ccc' } }></span>
-          </span>
-        </span>
-      );
-    }
-  }
-
   render() {
     let defaultCaret;
     let sortCaret;
-    let sortClass;
     const {
       headerText,
       dataAlign,
@@ -135,8 +99,6 @@ class TableHeaderColumn extends Component {
       caretRender,
       className,
       isOnlyHead,
-      version,
-      sortHeaderColumnClassName: customSortClass,
       thStyle: style
     } = this.props;
     const thStyle = {
@@ -144,25 +106,28 @@ class TableHeaderColumn extends Component {
       display: hidden ? 'none' : null,
       ...style
     };
-    const isBootstrap4 = Util.isBootstrap4(version);
     if (!isOnlyHead) {
       if (sortIndicator) {
-        defaultCaret = this.renderDefaultCaret(dataSort, isBootstrap4);
+        defaultCaret = (!dataSort) ? null : (
+          <span className='order'>
+            <span className='dropdown'>
+              <span className='caret' style={ { margin: '10px 0 10px 5px', color: '#ccc' } }></span>
+            </span>
+            <span className='dropup'>
+              <span className='caret' style={ { margin: '10px 0', color: '#ccc' } }></span>
+            </span>
+          </span>
+        );
       }
-      sortCaret = sort ? Util.renderReactSortCaret(sort, isBootstrap4) : defaultCaret;
+      sortCaret = sort ? Util.renderReactSortCaret(sort) : defaultCaret;
       if (caretRender) {
         sortCaret = caretRender(sort, dataField);
       }
     }
 
-    if (sort) {
-      sortClass = Util.isFunction(customSortClass) ?
-        customSortClass(sort, dataField) : customSortClass;
-    }
     const classes = classSet(
       Util.isFunction(className) ? className() : className,
-      !isOnlyHead && dataSort ? 'sort-column' : '',
-      sortClass);
+      !isOnlyHead && dataSort ? 'sort-column' : '');
 
     const attr = {};
     if (headerTitle) {
@@ -190,7 +155,9 @@ class TableHeaderColumn extends Component {
   }
 
   cleanFiltered() {
-    if (!this.props.filter) return;
+    if (this.props.filter === undefined) {
+      return;
+    }
 
     switch (this.props.filter.type) {
     case Const.FILTER_TYPE.TEXT: {
@@ -221,7 +188,7 @@ class TableHeaderColumn extends Component {
   }
 
   applyFilter(val) {
-    if (!this.props.filter) return;
+    if (this.props.filter === undefined) return;
     switch (this.props.filter.type) {
     case Const.FILTER_TYPE.TEXT: {
       this.refs.textFilter.applyFilter(val);
@@ -263,7 +230,6 @@ TableHeaderColumn.propTypes = {
   dataFormat: PropTypes.func,
   csvFormat: PropTypes.func,
   csvHeader: PropTypes.string,
-  csvFieldType: PropTypes.oneOf([ Const.CSV_STRING_TYPE, Const.CSV_NUMBER_TYPE ]),
   isKey: PropTypes.bool,
   editable: PropTypes.any,
   hidden: PropTypes.bool,
@@ -276,15 +242,10 @@ TableHeaderColumn.propTypes = {
   width: PropTypes.string,
   sortFunc: PropTypes.func,
   sortFuncExtraData: PropTypes.any,
-  sortHeaderColumnClassName: PropTypes.any,
   columnClassName: PropTypes.any,
   editColumnClassName: PropTypes.any,
   invalidEditColumnClassName: PropTypes.any,
-  columnTitle: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.func,
-    PropTypes.string
-  ]),
+  columnTitle: PropTypes.bool,
   filterFormatted: PropTypes.bool,
   filterValue: PropTypes.func,
   sort: PropTypes.string,
@@ -309,7 +270,6 @@ TableHeaderColumn.propTypes = {
   export: PropTypes.bool,
   expandable: PropTypes.bool,
   tdAttr: PropTypes.object,
-  editTdAttr: PropTypes.object,
   tdStyle: PropTypes.object,
   thStyle: PropTypes.object,
   keyValidator: PropTypes.bool,
@@ -324,7 +284,6 @@ TableHeaderColumn.defaultProps = {
   dataFormat: undefined,
   csvFormat: undefined,
   csvHeader: undefined,
-  csvFieldType: Const.CSV_STRING_TYPE,
   isKey: false,
   editable: true,
   onSort: undefined,
@@ -347,7 +306,6 @@ TableHeaderColumn.defaultProps = {
   sortIndicator: true,
   expandable: true,
   tdAttr: undefined,
-  editTdAttr: undefined,
   tdStyle: undefined,
   thStyle: undefined,
   keyValidator: false,

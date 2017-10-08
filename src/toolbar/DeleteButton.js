@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, PropTypes } from 'react';
 import Const from '../Const';
 
 const deleteBtnDefaultClass = 'react-bs-table-del-btn';
@@ -16,7 +15,7 @@ class DeleteButton extends Component {
       ...rest
     } = this.props;
     const content = children ||
-      (<span><i className={ `fa glyphicon ${btnGlyphicon}` }></i> { btnText }</span>);
+      (<span><i className={ `glyphicon ${btnGlyphicon}` }></i> { btnText }</span>);
     return (
       <button type='button'
         className={ `btn ${btnContextual} ${deleteBtnDefaultClass} ${className}` }
@@ -40,7 +39,7 @@ DeleteButton.defaultProps = {
   btnContextual: 'btn-warning',
   className: '',
   onClick: undefined,
-  btnGlyphicon: 'glyphicon-trash fa-trash'
+  btnGlyphicon: 'glyphicon-trash'
 };
 
 export default DeleteButton;

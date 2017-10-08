@@ -1,8 +1,6 @@
 /* eslint max-len: 0 */
 import React from 'react';
-import PropTypes from 'prop-types';
-import 'react-s-alert/dist/s-alert-default.css';
-import 'react-s-alert/dist/s-alert-css-effects/scale.css';
+import 'toastr/build/toastr.min.css';
 import '../../../css/react-bootstrap-table.css';
 import {
   Grid,
@@ -13,7 +11,7 @@ import {
 class App extends React.Component {
 
   static propTypes = {
-    children: PropTypes.node
+    children: React.PropTypes.node
   };
 
   static defaultProps = {};
@@ -69,9 +67,6 @@ class App extends React.Component {
     }, {
       text: 'KeyBoard Navigation',
       href: 'keyboard-nav'
-    }, {
-      text: 'Footer',
-      href: 'footer'
     }, {
       text: 'Other',
       href: 'others'

@@ -78,8 +78,11 @@ export default class CustomInsertModalFieldTable extends React.Component {
   }
 
   render() {
+    const options = {
+      insertModalField: this.createCustomModalField
+    };
     return (
-      <BootstrapTable ref='table' data={ products } insertRow>
+      <BootstrapTable ref='table' data={ products } options={ options } insertRow>
         <TableHeaderColumn dataField='id' isKey={ true } customInsertEditor={ { getElement: this.customKeyField } }>Product ID</TableHeaderColumn>
         <TableHeaderColumn dataField='name' customInsertEditor={ { getElement: this.customNameField } }>Product Name</TableHeaderColumn>
         <TableHeaderColumn dataField='sales' customInsertEditor={ { getElement: this.customSaleField } }>On Sales?</TableHeaderColumn>

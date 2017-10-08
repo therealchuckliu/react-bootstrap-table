@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Util from '../util';
+import React, { Component, PropTypes } from 'react';
 
 class InsertModalHeader extends Component {
 
@@ -10,23 +8,9 @@ class InsertModalHeader extends Component {
     onModalClose();
   }
 
-  renderContent(closeBtn) {
-    const { version, title: titleText } = this.props;
-    const title = <h4 key='title' className='modal-title'>{ titleText }</h4>;
-    if (Util.isBootstrap4(version)) {
-      return [ title, closeBtn ];
-    } else {
-      return (
-        <span>
-          { closeBtn }
-          { title }
-        </span>
-      );
-    }
-  }
-
   render() {
     const {
+      title,
       hideClose,
       className,
       children
@@ -40,7 +24,12 @@ class InsertModalHeader extends Component {
       </button>
     );
 
-    const content = children || this.renderContent(closeBtn);
+    const content = children || (
+      <span>
+        { closeBtn }
+        <h4 className='modal-title'>{ title }</h4>
+      </span>
+    );
 
     return (
       <div className={ `modal-header ${className}` }>
@@ -51,7 +40,6 @@ class InsertModalHeader extends Component {
 }
 
 InsertModalHeader.propTypes = {
-  version: PropTypes.string,
   className: PropTypes.string,
   title: PropTypes.string,
   onModalClose: PropTypes.func,
@@ -59,7 +47,6 @@ InsertModalHeader.propTypes = {
   beforeClose: PropTypes.func
 };
 InsertModalHeader.defaultProps = {
-  version: '3',
   className: '',
   title: 'Add Row',
   onModalClose: undefined,

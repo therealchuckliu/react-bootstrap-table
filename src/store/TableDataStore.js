@@ -436,14 +436,6 @@ export class TableDataStore {
     }
   }
 
-  /**
-   * Filter if targetVal is contained in filterVal.
-   */
-  filterArray(targetVal, filterVal) {
-    // case insensitive
-    return filterVal.indexOf(targetVal) > -1;
-  }
-
   /* General search function
    * It will search for the text if the input includes that text;
    */
@@ -496,13 +488,6 @@ export class TableDataStore {
           filterVal = filterObj[key].value;
           break;
         }
-        case Const.FILTER_TYPE.ARRAY: {
-          filterVal = filterObj[key].value;
-          if (!Array.isArray(filterVal)) {
-            throw new Error('Value must be an Array');
-          }
-          break;
-        }
         default: {
           filterVal = filterObj[key].value;
           if (filterVal === undefined) {
@@ -541,10 +526,6 @@ export class TableDataStore {
         case Const.FILTER_TYPE.CUSTOM: {
           const cond = filterObj[key].props ? filterObj[key].props.cond : Const.FILTER_COND_LIKE;
           valid = this.filterCustom(targetVal, filterVal, filterObj[key].value, cond);
-          break;
-        }
-        case Const.FILTER_TYPE.ARRAY: {
-          valid = this.filterArray(targetVal, filterVal);
           break;
         }
         default: {
@@ -658,9 +639,8 @@ export class TableDataStore {
         if (sortFunc) {
           result = sortFunc(a, b, sortDetails.order, sortDetails.sortField, sortFuncExtraData);
         } else {
-          const valueA = a[sortDetails.sortField] == null ? '' : a[sortDetails.sortField];
-          const valueB = b[sortDetails.sortField] == null ? '' : b[sortDetails.sortField];
-
+          const valueA = a[sortDetails.sortField] === null ? '' : a[sortDetails.sortField];
+          const valueB = b[sortDetails.sortField] === null ? '' : b[sortDetails.sortField];
           if (isDesc) {
             if (typeof valueB === 'string') {
               result = valueB.localeCompare(valueA);
