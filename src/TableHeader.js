@@ -67,11 +67,12 @@ class TableHeader extends Component {
     ]);
     const { sortIndicator, sortList, onSort, reset } = this.props;
 
-    React.Children.forEach(this.props.children, (elm) => {
+    React.Children.forEach(this.props.children, (elm, i) => {
       if (elm === null || elm === undefined) {
         // Skip null or undefined elements.
         return;
       }
+
       const { dataField, dataSort } = elm.props;
       const sort = getSortOrder(sortList, dataField, dataSort);
       const rowIndex = elm.props.row ? Number(elm.props.row) : 0;
@@ -89,10 +90,21 @@ class TableHeader extends Component {
           ));
       }
 
-      if ((rowSpan + rowIndex) === 1) {
-        stickyRows.push(React.cloneElement(
-          elm, { reset, key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false }
+      if (i === 0) {
+        stickyRows[0] = [];
+        stickyRows[0].push(React.cloneElement(
+          elm, { reset, key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false, className: 'sticky-column' }
           ));
+        if (rowCount > 0) {
+          stickyRows[0].push(React.cloneElement(
+            elm, { reset, key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false, row: 0, rowSpan: 1, className: 'sticky-filler-column' }
+            ));
+          for (let row = 1; row < rowCount + 1; row++) {
+            stickyRows[row] = [ React.cloneElement(
+            elm, { reset, key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false, row: row, rowSpan: 1, className: 'sticky-filler-column' }
+            ) ];
+          }
+        }
       }
     });
 
@@ -104,15 +116,17 @@ class TableHeader extends Component {
       );
     });
 
-    const stickytrs = (
-      <tr key={ 0 }>
-        { stickyRows[0] }
-      </tr>
-    );
+    const stickytrs = stickyRows.map((row, indexRow)=>{
+      return (
+        <tr key={ indexRow }>
+          { row }
+        </tr>
+      );
+    });
 
     return (
       <div ref='container' className={ containerClasses } style={ this.props.style }>
-        <table className={ tableClasses } style={ { position: 'absolute', display: this.props.showStickyColumn ? 'block' : 'none', width: 'initial', backgroundColor: '#FFFFFF' } }>
+        <table className={ tableClasses } style={ { position: 'absolute', display: this.props.showStickyColumn ? 'block' : 'none', width: 'initial' } }>
           { React.cloneElement(this.props.colGroups) }
           <thead ref='header'>
             { stickytrs }
