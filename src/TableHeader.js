@@ -93,15 +93,15 @@ class TableHeader extends Component {
       if (i === 0) {
         stickyRows[0] = [];
         stickyRows[0].push(React.cloneElement(
-          elm, { reset, key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false, className: 'sticky-column' }
+          elm, { reset, key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false, className: 'react-boostrap-table-sticky' }
           ));
         if (rowCount > 0) {
           stickyRows[0].push(React.cloneElement(
-            elm, { reset, key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false, row: 0, rowSpan: 1, className: 'sticky-filler-column' }
+            elm, { reset, key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false, row: 0, rowSpan: 1, className: 'react-boostrap-table-hidden' }
             ));
           for (let row = 1; row < rowCount + 1; row++) {
             stickyRows[row] = [ React.cloneElement(
-            elm, { reset, key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false, row: row, rowSpan: 1, className: 'sticky-filler-column' }
+            elm, { reset, key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false, row: row, rowSpan: 1, className: 'react-boostrap-table-hidden' }
             ) ];
           }
         }
