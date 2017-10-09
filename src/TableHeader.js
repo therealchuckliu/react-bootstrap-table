@@ -126,7 +126,7 @@ class TableHeader extends Component {
 
     return (
       <div ref='container' className={ containerClasses } style={ this.props.style }>
-        <table className={ tableClasses } style={ { position: 'absolute', display: this.props.showStickyColumn ? 'block' : 'none', width: 'initial' } }>
+        <table className={ tableClasses } style={ { position: 'absolute', display: this.props.showStickyColumn ? 'block' : 'none', width: 'initial', 'z-index': 999 } }>
           { React.cloneElement(this.props.colGroups) }
           <thead ref='header'>
             { stickytrs }
