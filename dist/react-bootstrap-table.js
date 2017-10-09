@@ -2561,7 +2561,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        { ref: 'container', className: containerClasses, style: this.props.style },
 	        _react2.default.createElement(
 	          'table',
-	          { className: tableClasses, style: { position: 'absolute', display: this.props.showStickyColumn ? 'block' : 'none', width: 'initial', 'z-index': 999 } },
+	          { className: tableClasses, style: { position: 'absolute', display: this.props.showStickyColumn ? 'block' : 'none', width: 'initial', zIndex: 999 } },
 	          _react2.default.cloneElement(this.props.colGroups),
 	          _react2.default.createElement(
 	            'thead',
