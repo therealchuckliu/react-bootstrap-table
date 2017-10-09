@@ -22,18 +22,6 @@ addProducts(70);
 export default class DefaultPaginationTable extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      stickyColumnShown: false
-    };
-  }
-
-  componentDidMount() {
-    window.addEventListener('resize', this.updateDimensions.bind(this));
-    this.updateDimensions();
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateDimensions.bind(this));
   }
 
   render() {
@@ -42,34 +30,23 @@ export default class DefaultPaginationTable extends React.Component {
         <BootstrapTable
           data={ products }
           pagination
-          showStickyColumn={ this.state.stickyColumnShown }
+          showStickyColumn
           ref='bsTable'>
-          <TableHeaderColumn width='200' dataField='name'>Product Name</TableHeaderColumn>
-          <TableHeaderColumn width='200' dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
-          <TableHeaderColumn width='200' dataField='id'>Product ID</TableHeaderColumn>
-          <TableHeaderColumn width='200' dataField='price'>Product Price</TableHeaderColumn>
-          <TableHeaderColumn width='200' dataField='price'>Product Price</TableHeaderColumn>
+          <TableHeaderColumn width='200' row='0' rowSpan='2' dataField='name'>Product Name</TableHeaderColumn>
+          <TableHeaderColumn width='200' row='0' rowSpan='2' dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
+          <TableHeaderColumn width='200' row='0' rowSpan='2' dataField='id'>Product ID</TableHeaderColumn>
+          <TableHeaderColumn width='200' row='0'>Product</TableHeaderColumn>
+          <TableHeaderColumn width='200' row='1' dataField='price'>Price</TableHeaderColumn>
+          <TableHeaderColumn width='200' row='1' dataField='price'>Price</TableHeaderColumn>
+          <TableHeaderColumn width='200' row='1' dataField='price'>Price</TableHeaderColumn>
+          <TableHeaderColumn width='200' row='1' dataField='price'>Price</TableHeaderColumn>
+          <TableHeaderColumn width='200' row='1' dataField='price'>Price</TableHeaderColumn>
+          <TableHeaderColumn width='200' row='1' dataField='price'>Price</TableHeaderColumn>
+          <TableHeaderColumn width='200' row='1' dataField='price'>Price</TableHeaderColumn>
+          <TableHeaderColumn width='200' row='1' dataField='price'>Price</TableHeaderColumn>
         </BootstrapTable>
       </div>
     );
-  }
-
-  updateDimensions() {
-    if (window.screen.width <= 766) {
-      const sizePerPage = this.refs.bsTable.getSizePerPage();
-      if (!this.state.stickyColumnShown) {
-        this.setState({
-          stickyColumnShown: true
-        });
-        for (let i = 0; i < sizePerPage; i++) {
-          this.refs.bsTable.setRowHeight(i, this.refs.bsTable.getRowHeight(i));
-        }
-      }
-    } else {
-      this.setState({
-        stickyColumnShown: false
-      });
-    }
   }
 
   handleButtonClick() {
