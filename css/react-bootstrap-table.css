@@ -306,10 +306,6 @@ td.react-bs-table-expand-cell {
   animation-name: bounceOut;
 }
 
-.react-boostrap-table-sticky {
-  background-color: #FFFFFF;
-}
-
 .react-boostrap-table-hidden {
   visibility: hidden;
 }

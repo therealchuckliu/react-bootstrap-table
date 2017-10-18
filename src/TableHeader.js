@@ -93,7 +93,7 @@ class TableHeader extends Component {
       if (i === 0) {
         stickyRows[0] = [];
         stickyRows[0].push(React.cloneElement(
-          elm, { reset, key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false, className: 'react-boostrap-table-sticky' }
+          elm, { reset, key: rowKey++, onSort, sort, sortIndicator, isOnlyHead: false, className: 'react-bootstrap-table-sticky' }
           ));
         if (rowCount > 0) {
           stickyRows[0].push(React.cloneElement(
